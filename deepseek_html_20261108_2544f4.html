@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#050914">
+<title>PRESENSI VISIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-orbs"><span></span><span></span><span></span></div>
+
+<!-- ========== LOGIN ========== -->
+<section id="loginScreen" class="screen active">
+  <div class="glass card login-card">
+    <div class="logo">PV</div>
+    <h1>PRESENSI <span>VISIT</span></h1>
+    <p class="sub">Sistem kehadiran & laporan kunjungan</p>
+
+    <label>Nama Lengkap</label>
+    <input id="loginNama" type="text" placeholder="Masukkan nama..." autocomplete="name">
+
+    <label>Instansi / Perusahaan</label>
+    <input id="loginInstansi" type="text" placeholder="Masukkan instansi..." autocomplete="organization">
+
+    <button id="btnLogin" class="btn primary">Masuk <span>→</span></button>
+    <p class="hint">Data tersimpan aman di Google Sheets Anda.</p>
+  </div>
+</section>
+
+<!-- ========== APP ========== -->
+<section id="appScreen" class="screen">
+  <header class="topbar glass">
+    <div>
+      <p class="eyebrow">SELAMAT DATANG</p>
+      <h2 id="userLabel">—</h2>
+    </div>
+    <button id="btnLogout" class="icon-btn" title="Keluar">⏻</button>
+  </header>
+
+  <main>
+    <!-- TAB PRESENSI -->
+    <div id="tabPresensi" class="tab-panel active">
+      <div class="glass card">
+        <div class="card-head">
+          <span class="badge live"><i></i> GPS REALTIME</span>
+          <span id="gpsAccuracy" class="muted">—</span>
+        </div>
+
+        <div class="location-box">
+          <p class="label">LOKASI TERDETEKSI</p>
+          <h3 id="lokasiNama">Mendeteksi lokasi...</h3>
+          <p id="lokasiKoordinat" class="coord">—</p>
+        </div>
+
+        <div class="camera-wrap">
+          <canvas id="previewCanvas"></canvas>
+          <video id="video" autoplay playsinline muted hidden></video>
+          <div id="cameraPlaceholder" class="camera-placeholder">
+            <span>📷</span>
+            <p>Kamera selfie belum aktif</p>
+          </div>
+          <div class="camera-controls">
+            <button id="btnStartCam" class="btn ghost small">Aktifkan Kamera</button>
+            <button id="btnMirror" class="btn ghost small hidden">↔ Anti-Mirror: ON</button>
+          </div>
+        </div>
+
+        <button id="btnPresensi" class="btn primary big" disabled>Ambil Presensi 📸</button>
+        <p id="presensiStatus" class="status"></p>
+      </div>
+    </div>
+
+    <!-- TAB VISIT -->
+    <div id="tabVisit" class="tab-panel">
+      <div class="glass card">
+        <h3 class="card-title">Laporan Visit</h3>
+
+        <label>Tujuan / Tempat Visit</label>
+        <input id="visitTujuan" type="text" placeholder="Contoh: PT Maju Jaya">
+
+        <label>Catatan / Hasil Visit</label>
+        <textarea id="visitCatatan" rows="3" placeholder="Tulis detail kunjungan..."></textarea>
+
+        <p class="label" style="margin-top:16px">DOKUMENTASI FOTO <span id="fotoCount">0/3</span></p>
+        <div id="fotoGrid" class="foto-grid"></div>
+
+        <div class="row">
+          <button id="btnKameraVisit" class="btn ghost small">📷 Kamera</button>
+          <button id="btnFileVisit" class="btn ghost small">🖼️ Pilih File</button>
+          <input id="fileInput" type="file" accept="image/*" capture="environment" hidden>
+          <input id="galleryInput" type="file" accept="image/*" multiple hidden>
+        </div>
+
+        <div class="location-mini">
+          <span>📍</span>
+          <p id="visitLokasi">Lokasi belum terdeteksi</p>
+        </div>
+
+        <button id="btnKirimVisit" class="btn primary big">Kirim Laporan 🚀</button>
+        <p id="visitStatus" class="status"></p>
+      </div>
+    </div>
+
+    <!-- TAB RIWAYAT -->
+    <div id="tabRiwayat" class="tab-panel">
+      <div class="glass card">
+        <div class="card-head">
+          <h3 class="card-title" style="margin:0">Riwayat</h3>
+          <button id="btnRefresh" class="btn ghost small">↻ Refresh</button>
+        </div>
+        <div id="riwayatList" class="riwayat-list">
+          <p class="muted">Memuat data...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav glass">
+    <button class="nav-btn active" data-tab="Presensi"><span>◉</span>Presensi</button>
+    <button class="nav-btn" data-tab="Visit"><span>✎</span>Visit</button>
+    <button class="nav-btn" data-tab="Riwayat"><span>≡</span>Riwayat</button>
+  </nav>
+</section>
+
+<!-- ========== MODAL KAMERA VISIT ========== -->
+<div id="cameraModal" class="modal">
+  <div class="modal-content glass">
+    <div class="modal-head">
+      <h3>Ambil Foto Dokumentasi</h3>
+      <button id="btnCloseModal" class="icon-btn">✕</button>
+    </div>
+    <div class="camera-wrap modal-cam">
+      <canvas id="visitPreviewCanvas"></canvas>
+      <video id="visitVideo" autoplay playsinline muted hidden></video>
+    </div>
+    <button id="btnSnapVisit" class="btn primary big">Ambil Foto 📸</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
