@@ -4,7 +4,7 @@
 
 const CONFIG = {
   // ⬇️ GANTI dengan URL Web App Apps Script Anda (yang berakhiran /exec)
-  GAS_URL: 'PASTE_URL_WEB_APP_ANDA_DI_SINI'
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbz2rhDF1QwFe8xvYUbtj56zqzAF5L6BrmNosta3yZ33lQD9nX8r97bW6dbrsms1Er80jg/exec'
 };
 
 /* ================= STATE ================= */
