@@ -15,7 +15,6 @@ let lastGeocode  = { time: 0, lat: 0, lng: 0 };
 
 let selfieStream = null;
 let selfieRAF    = null;
-// Anti-mirror: di mobile kamera depan default mirror, kita flip canvas agar hasil TIDAK mirror.
 let antiMirror   = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 let visitStream  = null;
@@ -403,7 +402,15 @@ async function simpanVisit() {
 
 /* ================= RIWAYAT ================= */
 async function loadRiwayat() {
+  const btn = els.btnRefresh;
+  const originalText = btn.innerHTML;
+  
+  // Animasi Loading di Tombol Refresh
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin">↻</span> Memuat...';
+  
   els.riwayatList.innerHTML = '<p class="muted">Memuat data...</p>';
+  
   try {
     const res  = await fetch(CONFIG.GAS_URL + '?action=getAll');
     const data = await res.json();
@@ -449,6 +456,10 @@ async function loadRiwayat() {
     }).join('');
   } catch (err) {
     els.riwayatList.innerHTML = `<p class="status err">Gagal memuat: ${esc(err.message)}</p>`;
+  } finally {
+    // Kembalikan tombol ke keadaan semula
+    btn.disabled = false;
+    btn.innerHTML = originalText;
   }
 }
 
