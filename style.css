@@ -108,11 +108,19 @@ textarea { resize: vertical; }
 .btn.ghost:hover { background: rgba(255,255,255,.12); }
 .btn.small { padding: 10px 14px; font-size: 13px; margin-top: 10px; }
 
+/* PERBAIKAN TOMBOL ICON (POWER & CLOSE) */
 .icon-btn {
   width: 42px; height: 42px; border-radius: 13px; border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06); color: var(--text); font-size: 18px; cursor: pointer;
+  background: rgba(255,255,255,.06); color: var(--text); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; flex-shrink: 0; /* Mencegah gepeng di layar kecil */
+  transition: .2s;
 }
-.icon-btn:hover { background: rgba(255,255,255,.14); }
+.icon-btn:hover { background: rgba(255,255,255,.14); color: var(--pink); }
+
+/* ANIMASI LOADING REFRESH */
+.spin { display: inline-block; animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
 .hidden { display: none !important; }
 .muted { color: var(--muted); font-size: 12px; }
@@ -239,7 +247,7 @@ main { max-width: 560px; margin: 0 auto; }
 /* ============ WATERMARK ============ */
 .watermark {
   position: fixed;
-  bottom: 90px; /* Berada di atas navigasi bawah */
+  bottom: 90px;
   left: 0;
   width: 100%;
   text-align: center;
@@ -247,8 +255,8 @@ main { max-width: 560px; margin: 0 auto; }
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.15); /* Transparan elegan */
-  pointer-events: none; /* Tidak menghalangi klik */
+  color: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
   z-index: 10;
   text-transform: uppercase;
 }
