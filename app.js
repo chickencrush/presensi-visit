@@ -3,7 +3,7 @@
  *******************************************************/
 
 const CONFIG = {
-  // ⬇️ GANTI dengan URL Web App Apps Script Anda (yang berakhiran /exec)
+  // ⬇️ GANTI DENGAN URL WEB APP APPS SCRIPT ANDA (yang berakhiran /exec)
   GAS_URL: 'https://script.google.com/macros/s/AKfycbz2rhDF1QwFe8xvYUbtj56zqzAF5L6BrmNosta3yZ33lQD9nX8r97bW6dbrsms1Er80jg/exec'
 };
 
@@ -265,7 +265,6 @@ async function openVisitCamera() {
     await els.visitVideo.play();
     renderVisitPreview();
   } catch {
-    // fallback kamera apa saja
     try {
       visitStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
       els.visitVideo.srcObject = visitStream;
@@ -457,7 +456,7 @@ async function loadRiwayat() {
 async function postToGAS(payload) {
   const res = await fetch(CONFIG.GAS_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // hindari preflight CORS
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
     body: JSON.stringify(payload),
     redirect: 'follow'
   });
